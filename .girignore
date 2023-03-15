@@ -1,10 +1,15 @@
+# Golang
+go.sum
+
 # Binaries for programs and plugins
 *.exe
 *.exe~
 *.dll
 *.so
 *.dylib
-.idea
+
+# idea
+.idea/
 
 # Test binary, built with `go test -c`
 *.test

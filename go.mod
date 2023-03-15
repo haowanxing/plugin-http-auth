@@ -1,4 +1,4 @@
-module plugin-http-auth
+module github.com/haowanxing/plugin-http-auth
 
 go 1.20
 

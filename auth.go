@@ -10,21 +10,29 @@ import (
 
 func (p *HttpAuthConfig) changeAuthHook() {
 	OnAuthSub = func(promise *util.Promise[ISubscriber]) error {
+		if len(promise.Value.GetSubscriber().ID) == 0 {
+			promise.Resolve()
+			return nil
+		}
 		go p.checkSubAuthResult(promise)
 		return nil
 	}
 	OnAuthPub = func(promise *util.Promise[IPublisher]) error {
+		if len(promise.Value.GetPublisher().ID) == 0 {
+			promise.Resolve()
+			return nil
+		}
 		go p.checkPubAuthResult(promise)
 		return nil
 	}
 }
 
 func (p *HttpAuthConfig) checkAPIOK(addr string, buf []byte) bool {
-	plugin.Info("Auth", zap.String("addr", addr))
 	if len(addr) == 0 {
 		return true
 	} else {
 		if resp, err := http.Post(addr, "application/json", bytes.NewBuffer(buf)); err == nil {
+			plugin.Info("Auth", zap.String("addr", addr), zap.Int("http_code", resp.StatusCode))
 			if resp.StatusCode == http.StatusOK {
 				return true
 			}

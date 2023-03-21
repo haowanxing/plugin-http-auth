@@ -17,6 +17,8 @@ import (
 ## 配置
 
 ```yaml
+#global:
+#  enableauth: true # 开启鉴权（默认开启）
 httpauth:
   onsubaddr: http://localhost:9091/subauth
   onpubaddr: http://localhost:9091/pubauth

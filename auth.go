@@ -32,10 +32,12 @@ func (p *HttpAuthConfig) checkAPIOK(addr string, buf []byte) bool {
 		return true
 	} else {
 		if resp, err := http.Post(addr, "application/json", bytes.NewBuffer(buf)); err == nil {
-			plugin.Info("Auth", zap.String("addr", addr), zap.Int("http_code", resp.StatusCode))
+			plugin.Info("auth resp", zap.String("addr", addr), zap.Int("http_code", resp.StatusCode))
 			if resp.StatusCode == http.StatusOK {
 				return true
 			}
+		} else {
+			plugin.Error("auth req fail", zap.Error(err))
 		}
 	}
 	return false

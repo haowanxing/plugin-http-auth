@@ -26,7 +26,8 @@ func (p *HttpAuthConfig) OnEvent(event any) {
 		plugin.Info("Config", zap.String("OnPubAddr", p.OnPubAddr))
 		p.changeAuthHook()
 	case config.Config: //插件热更新逻辑
-		e.Unmarshal(p)
+		p.OnPubAddr = e.Get("onpubaddr").GetValue().(string)
+		p.OnSubAddr = e.Get("onsubaddr").GetValue().(string)
 	}
 }
 
